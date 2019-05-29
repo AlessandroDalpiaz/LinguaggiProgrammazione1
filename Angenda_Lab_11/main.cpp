@@ -20,5 +20,7 @@ int main(int argc, char** argv) {
 	e = inizializzaEvento(d1,d2,APPUNTAMENTO);
 	a.addEvento(e);
 	a.stampa();
+	char *nome="Agenda.txt";
+	printf("%d",a.scriviFile(nome));
 	return 0;
 }

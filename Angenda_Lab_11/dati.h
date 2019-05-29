@@ -34,6 +34,41 @@ typedef struct Tagenda{
 			stampaEvento(eventi[i]);
 		}
 	}
+	int scriviFile(char *nomefile){
+		FILE* f;
+		//f = fopen("Ciao.txt", "w");
+		if((f=fopen(nomefile, "w"))==NULL){
+			printf("Errore apertura file. Array w");
+			return 0;
+		}
+		else{
+			fprintf(f, "%d\n",n_eventi);
+			for(int i=0;i<n_eventi;i++){
+				fprintf(f,"----------------------\n");
+				fprintf(f, "Inzio: %d/%d/%d %d:%d\n",eventi[i].inizio.giorno,eventi[i].inizio.mese,eventi[i].inizio.anno,eventi[i].inizio.ora,eventi[i].inizio.minuti);
+				fprintf(f, "Fine: %d/%d/%d %d:%d\n",eventi[i].inizio.giorno,eventi[i].inizio.mese,eventi[i].inizio.anno,eventi[i].inizio.ora,eventi[i].inizio.minuti);
+				switch(eventi[i].attivita){
+					case LEZIONE: fprintf(f,"LEZIONE\n");break;
+					case STUDIO: fprintf(f,"STUDIO\n");break;
+					case PISCINA: fprintf(f,"PISCINA\n");break;
+					case PALLAVOLO: fprintf(f,"PALLAVOLO\n");break;
+					case APPUNTAMENTO: fprintf(f,"APPUNTAMENTO\n");break;
+				}
+			}
+		}
+		fclose(f);
+		return 1;
+		
+	}
+	int leggiFile( char *nomefile){//Tagenda *pa,
+		
+	}
+	int scriviFileBin(char *nomefile){
+		
+	}
+	int leggiFileBin(Tagenda *pa, char *nomefile){
+		
+	}
 }Tagenda;
 Tdata inizializzaData(int a,int me,int g,int o,int mi);
 void stampaData(Tdata d);
