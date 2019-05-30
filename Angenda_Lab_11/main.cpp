@@ -6,6 +6,7 @@ int main(int argc, char** argv) {
 	Tdata d1, d2;
 	Tevento e;
 	Tagenda a;
+	Tagenda aa;
 	
 	d1 = inizializzaData(2009,6,10,10,30);
 	d2 = inizializzaData(2009,6,10,11,30);
@@ -22,5 +23,9 @@ int main(int argc, char** argv) {
 	a.stampa();
 	char *nome="Agenda.txt";
 	printf("%d",a.scriviFile(nome));
+	printf("%d",aa.leggiFile(nome));
+	//printf("%d",aa.leggi(nome));
+	aa.stampa();
+	printf("%d",aa.n_eventi);
 	return 0;
 }
