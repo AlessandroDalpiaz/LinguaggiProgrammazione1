@@ -5,7 +5,7 @@
 #include <string.h>
 
 int main(int argc, char** argv) {
-	Tnodo *n=new Tnodo();
+	Tnodo *n=NULL;
 	stampa(n);
 	Tdato d;
 	Tdato d2;
