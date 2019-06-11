@@ -18,6 +18,11 @@ typedef struct Tdato{
 	void stampa(){
 		printf("[ %d - %f ]\n",index,value);
 	}
+	bool eq(Tdato d){
+		if(index==d.index && value ==d.value){
+			return true;
+		}else return false;
+	}
 	
 	}Tdato;
 typedef struct Tnodo{
@@ -36,7 +41,9 @@ typedef struct Tnodo{
 		dato = d;
 		next = n;
 	}
-	~Tnodo(){}	
+	~Tnodo(){
+		printf("distrutto\n");
+	}	
 	void stampa(){ 
 		dato.stampa();
 		printf("\t%d",&dato);
@@ -60,6 +67,8 @@ Nodoptr insert_last (Nodoptr s, Dato d);
 Nodoptr remove_first (Nodoptr s);
 //
 Nodoptr remove_last (Nodoptr s);
+//
+Nodoptr search_remove (Nodoptr p, Dato d);
 
 int main(int argc, char** argv) {
 	Dato d = Dato();
@@ -67,14 +76,13 @@ int main(int argc, char** argv) {
 	
 	d.index = 2; d.value = 10.4;
 	x= insert_first (x,d);
-	//stampa(x);
 	
 	d.index = 3; d.value = -1.5;
 	x = insert_last (x,d);
-	//stampa(x);
 	
 	d.index = 4; d.value = 0.0;
 	x = insert_first (x,d);
+	printf("\t STAMPA \n");
 	stampa(x);
 
 	printf("\n\t RIMUOVO FIRST \n");	
@@ -88,7 +96,24 @@ int main(int argc, char** argv) {
 	printf("\n\t RIMUOVO LAST 1 elemento \n");
 	x= remove_last(x);
 	stampa(x);
+
+/////////////////////////////////////////////////
+	printf("\n\t INSERT FIRST \n");
+	d.index = 2; d.value = 10.4;
+	x= insert_first (x,d);
 	
+	printf("\n\t INSERT LAST \n");
+	d.index = 3; d.value = -1.5;
+	x = insert_last (x,d);
+	
+	printf("\n\t INSERT FIRST \n");
+	d.index = 4; d.value = 0.0;
+	x = insert_first (x,d);
+	stampa(x);
+	/////////////////////////////////////////
+	printf("\n\t RIMUOVO A SCELTA \n");
+	x = search_remove (x,d);
+	stampa(x);	
 	return 0;
 }
 
@@ -102,9 +127,10 @@ void stampa (Nodoptr s){
 	if(s==NULL){
 		printf("lista vuota\n");
 	}
-	while (s->next!=NULL){ //cerco il puntatore prossimo disponibile, ovvero =NULL
-		s->stampa();
-		s=s->next;	
+	Nodoptr h=s;
+	while (h->next!=NULL){ //cerco il puntatore prossimo disponibile, ovvero =NULL
+		h->stampa();
+		h=h->next;	
 	}
 	if(s->next==NULL){
 		s->stampa();
@@ -151,7 +177,30 @@ Nodoptr remove_last (Nodoptr s){
 		}
 		//delete [] q->next;
 		delete q->next;
-		q->next=NULL;
+		q->next=NULL;//q->next->next;
 	}
 	return s;
+}
+Nodoptr search_remove (Nodoptr p, Dato d){
+	if (p != NULL) {
+		Nodoptr q = p;
+		if ( q->dato.eq (d) ) {
+			p = p->next;
+			delete q;
+			return p;
+		}
+		else {
+			while(q->next != NULL) {
+				if ( q->next->dato.eq(d) ) {
+				Nodoptr r = q->next;
+				q->next = q->next->next;
+				delete r;
+				return p;
+				}
+				// if (q->next != NULL)
+				q=q->next;
+			}
+		}
+	}
+	return NULL;
 }
