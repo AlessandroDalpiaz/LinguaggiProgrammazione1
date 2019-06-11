@@ -23,7 +23,16 @@ typedef struct Tdato{
 			return true;
 		}else return false;
 	}
-	
+	bool lt(Tdato d){	//verifico per index
+		if(index<d.index){
+			return true;
+		}else return false;
+	}
+	bool gt(Tdato d){	//verifico per index
+		if(index>d.index){
+			return true;
+		}else return false;
+	}
 	}Tdato;
 typedef struct Tnodo{
 	Tdato dato;
@@ -69,15 +78,19 @@ Nodoptr remove_first (Nodoptr s);
 Nodoptr remove_last (Nodoptr s);
 //
 Nodoptr search_remove (Nodoptr p, Dato d);
+//
+Nodoptr insert_order(Nodoptr s, Tdato d);
 
 int main(int argc, char** argv) {
 	Dato d = Dato();
+	Dato dn = Dato();
 	Nodoptr x = NULL;
+	dn.index = 5; dn.value = 22.4;
 	
 	d.index = 2; d.value = 10.4;
 	x= insert_first (x,d);
 	
-	d.index = 3; d.value = -1.5;
+	d.index = 1; d.value = -1.5;
 	x = insert_last (x,d);
 	
 	d.index = 4; d.value = 0.0;
@@ -113,7 +126,19 @@ int main(int argc, char** argv) {
 	/////////////////////////////////////////
 	printf("\n\t RIMUOVO A SCELTA \n");
 	x = search_remove (x,d);
-	stampa(x);	
+	stampa(x);
+	
+	/////////////////////////////////////////
+	printf("\n\t insert_order \n");	
+	x=insert_order(x, dn);
+	stampa(x);
+	
+	/*-------------test............*/
+	printf("\n");
+	x->dato.stampa();
+	x->next->next->dato.stampa();
+	printf("x->next->next  %d\n",x->next->next);
+	printf("x->next  %d\n",x->next);
 	return 0;
 }
 
@@ -132,8 +157,8 @@ void stampa (Nodoptr s){
 		h->stampa();
 		h=h->next;	
 	}
-	if(s->next==NULL){
-		s->stampa();
+	if(h->next==NULL){
+		h->stampa();
 	}
 	
 }
@@ -204,3 +229,15 @@ Nodoptr search_remove (Nodoptr p, Dato d){
 	}
 	return NULL;
 }
+Nodoptr insert_order(Nodoptr s, Tdato d){
+	if ((s==NULL) || s->dato.gt(d) ) {
+		return insert_first(s, d);
+	}
+	Nodoptr q=s;
+	while((q->next!=NULL)&&q->next->dato.lt(d)){
+		q=q->next;
+	}
+	q->next=new Nodo(d,q->next);
+	return s;
+}
+
