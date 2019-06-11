@@ -49,6 +49,7 @@ int length (Nodoptr p){
 void stampa(Nodoptr n){
 	if(n==NULL){
 		printf("lista vuota\n");
+		return;
 	}
 	Nodoptr h=n;
 	while (h->next!=NULL){ //cerco il puntatore prossimo disponibile, ovvero =NULL
