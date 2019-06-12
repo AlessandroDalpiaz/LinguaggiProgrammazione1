@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctime>
 #define MAX 20
-#define K 5
+#define K 15
 #define N 3
 using namespace std;
 
@@ -87,7 +87,7 @@ CodaPtr put (CodaPtr p, Tdato d);
 //estrae l’elemento in testa alla lista
 Tdato get (CodaPtr p);
 int casuale(int min,int max);
-void stampa(CodaPtr p[2]);
+
 int main(int argc, char** argv) {
 	//creo array di puntatori
 	CodaPtr p[N];
@@ -119,10 +119,29 @@ int main(int argc, char** argv) {
 		d.cognome[3] = '\0';
 		
        	d.eta= casuale(1,50);
-		
-		//scelgo una coda in modo casuale per inserire il dato
+       	
+       	//scelgo una coda in modo casuale per inserire il dato
        	pos=casuale(0,2);
        	put(p[pos], d);   //invocazione della funzione put
+       	//p[pos]->put(d);      //invocazione del metodo put
+       	cout << "situazione CODE dopo PUT"<<endl;
+       	for(i=0 ; i<N ; i++){
+       		cout << "coda " << i <<endl; 
+			p[i]->stampa();
+		}
+       
+    	//scelgo una coda in modo casuale per togliere un dato
+       	pos=casuale(0,2);
+       	//se la lista non è vuota tolgo un elemento
+       	if(p[pos]!=NULL){
+        	d = get(p[pos]);     //invocazione della funzione get
+           	//d = p[pos]->get();   //invocazione del metodo get
+           	cout << "situazione CODE dopo GET"<<endl;
+           	for(i=0 ; i<N ; i++){
+       			cout << "coda " << i <<endl; 
+				p[i]->stampa();
+			}
+       	}
 	}
 	printf("\nUNO \n");
     p[0]->stampa();
@@ -131,7 +150,10 @@ int main(int argc, char** argv) {
     printf("TRE \n");
     p[2]->stampa();
     
-    
+    //distruggo tutto
+    for(i=0 ; i<N ; i++){
+    	p[i]->~Coda();
+	}
 	return 0;
 }
 int casuale(int min ,int max){
@@ -152,17 +174,6 @@ CodaPtr put (CodaPtr p, Tdato d){
 	return p;
 }
 
-//da fixare
-/*void stampa(CodaPtr p[2]){
-	CodaPtr q=p;//???
-	for(int i=0;i<=2;i++){
-		while(q[i]->head==q[i]->tail){
-			q[i]->head->dato.stampa();
-			q[i]=q[i]->head;
-		}
-	}
-}
-*/
 //estrae l’elemento in testa alla lista
 Tdato get (CodaPtr p){
 	Tdato d; //invoco costruttore di default
