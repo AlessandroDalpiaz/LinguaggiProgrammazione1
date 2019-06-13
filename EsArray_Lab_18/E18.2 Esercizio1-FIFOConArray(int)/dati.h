@@ -1,6 +1,5 @@
-//#ifndef __MYDATA__
-//#define __MYADATA__
-
+#ifndef __MYDATA__
+#define __MYDATA__
 
 #include <cstdlib>
 #include <iostream>
@@ -66,4 +65,4 @@ int Get(CodaPtr p);
 void Print(CodaPtr p);
 
 
-//#endif
+#endif
