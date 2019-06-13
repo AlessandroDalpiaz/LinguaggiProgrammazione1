@@ -80,7 +80,7 @@ int casuale(int min,int max);
 void creaBiglietto(Tbiglietto *x);
 int cerca(Tbiglietteria b, Tmezzo m);
 void inserisciBiglietto(Tbiglietteria * b,Tbiglietto x);
-Telem cercaMezzo(Tbiglietteria);
+Telem cercaMezzo(Tbiglietteria b);
 
 
 #endif

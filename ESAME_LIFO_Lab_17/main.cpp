@@ -14,6 +14,8 @@ int main(int argc, char** argv) {
 	biglietteria.stampa();
 	tele= cercaMezzo(biglietteria);
 	StampaMezzo(tele.mezzo);
+	//printf("%d",biglietteria.numBiglietti);
+	//printf("%d",tele.n);
 	printf(" %f",tele.n/biglietteria.numBiglietti);
 	return 0;
 }
