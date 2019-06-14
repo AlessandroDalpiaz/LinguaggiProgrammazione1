@@ -1,76 +1,62 @@
-#ifndef __dati_h__
-#define __dati_h__
-
-
-#include <iostream>
-#include <stdlib.h>
+#ifndef DATI_H_
+#define DATI_H_
 #include <cstdlib>
-#define EPS 0.001
-typedef struct Tdato{
-	int index;
-	float value;
-	Tdato(){
-	}
-	Tdato(int i,float f){
-		index=i;
-		value= f;
-	}
-	~Tdato(){}
+#include <iostream>
+using namespace std;
+
+// the main structure
+typedef struct Tipodata {
+    unsigned int posizione;
+    char* contenuto;
+    Tipodata(){
+		posizione=0;
+		contenuto=NULL;
+	}  
+    Tipodata(unsigned int p, char* c){
+		posizione=p;
+		contenuto=c; }
     void stampa(){
-      printf(" [%d-%f] ",index,value);
-    } 	
-    bool gt(Tdato d){
-      return (value > d.value);
-    }
-	bool eq(Tdato d){
-		return (value > d.value-EPS && value < d.value+EPS);
+		cout << "["<<posizione<<":'"<<contenuto<<"']";
+	} 	
+	bool gt(Tipodata d){
+  		if (posizione>d.posizione){
+		  	return true;
+		}else {
+			return false;	
+		}
 	}
-}Tdato;
-typedef Tdato Dato;
+}Tipodata;
 
-typedef struct Tnodo{
-	Dato dato;
-	Tnodo* prev;
-	Tnodo* next;
-  	Tnodo(Tdato d){ 
-		dato=d; prev=NULL; next=NULL; 
-  	}
-  	Tnodo(Tdato d, Tnodo* p,  Tnodo* n){ 
-    	dato=d; prev=p; next=n;
-  	}
-  	void stampa(){ 
-    	dato.stampa(); 
-  	}
-}Tnodo;
-
-typedef Tnodo Nodo;
-typedef Tnodo* Nodoptr;
-
-Nodoptr insertFirst(Nodoptr s,Dato d);
-Nodoptr insertLast(Nodoptr s, Tdato d);
-
-Nodoptr insertFirst(Nodoptr s,Dato d){
-	Nodoptr t = new Nodo(d, NULL, s); // creo il nodo con il nuovo dato
-	if(s == NULL){	// verifico se la coda è vuota
-		s->prev = t; 	// inserimento al primo posto
-    }
-	return t;
-}
-
-Nodoptr insertLast(Nodoptr s, Tdato d){
-    if (s == NULL) {
-		s = insertFirst(s, d);
-		return s;
+typedef struct Tiponodo {
+  	Tipodata dato;
+  	Tiponodo* prev;  
+  	Tiponodo* next;
+  	Tiponodo(){
+	Tipodata d; dato=d; prev=NULL; next=NULL;
 	}
-	Nodoptr p = s;
-	while (p->next != NULL) { //scorro fino all'ultimo
-		p = p->next;
+  	Tiponodo(Tipodata d, Tiponodo* p,  Tiponodo* n){
+	  	dato=d; prev=p; next=n;
 	}
-	p->next = new Nodo(d, p, NULL);
-	return s;
-}
+  	void stampa(){
+	  	dato.stampa();
+	}	
+}Tiponodo;
+typedef Tipodata dati;
+typedef Tiponodo nodo;
+typedef Tiponodo* nodoPtr;
 
-
+// function prototypes
+int lung(nodoPtr s);
+nodoPtr insertLast(nodoPtr s,dati CurrD);
+nodoPtr insertFirst(nodoPtr s, dati CurrD);
+nodoPtr insertOrder(nodoPtr s, dati CurrD);
+void stampa(nodoPtr s);
+nodoPtr removeFirst(nodoPtr s);
+nodoPtr removeLast(nodoPtr s);
+nodoPtr put(nodoPtr s, dati CurrD);
+nodoPtr get(nodoPtr s);
+dati readFirst(nodoPtr s);
 
 
 #endif
+
